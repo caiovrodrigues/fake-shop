@@ -9,13 +9,18 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - name: Autentica no docker hub
-        run: echo "Etapa de autenticação no docker hub"
-      - name: Build da imagem docker
-        run: echo "Etapa de build da aplicação"
-      - name: Push da imagem para o docker hub
-        run: echo "Etapa de push da imagem para o docker hub"
-      - run: echo "Fim do job de Integração contínua"
+      - name: Docker hub login
+        uses: docker/login-action@v3.3.0
+        with:
+          registry: Docker Hub
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_PWD}}
+      - name: Build e push da imagem docker
+        uses: docker/build-push-action@v6.15.0
+        with:
+          push: true
+          tags:
+            caiovrodrigues/fake-shop:latest
   cd:
     runs-on: ubuntu-latest
     steps:
