@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment #vamos criar um objeto do tipo Deployment
+metadata:
+  name: deployment-db #nome do deployment, outros objetos poderão acessá-lo através desse nome
+spec: #define o estado desejado do meu Deployment
+  replicas: 1 #quantidade de réplicas de Pods que o deployment (replicaset) vai fazer o possível para manter de pé
+  selector:
+    matchLabels:
+      app: postgres #o deployment vai ser o responsável pelos Pods com a label 'postgres'
+  template: #definimos o template base para os Pods que serão criados através desse Deployment
+    metadata:
+      labels:
+        app: postgres #todo Pod criado terá esse label, é necessário ter o mesmo label do seletor acima, é assim que o Replicaset vai saber quais Pods ele é responsável
+    spec: #especificação do Pod que será criado
+      containers: #definimos os containers que serão executados dentro desse Pod
+      - name: postgres-db
+        image: postgres:17
+        ports: #Dizemos as portas para acessar tal container
+        - containerPort: 5432 
+---
+apiVersion: v1
+kind: Service #Service é responsável por expor nossos Pods
+metadata:
+  name: service-db #nome do Service
+spec: #define o estado desejado do meu Service
+  selector:
+    app: postgres #parte crucial, é aqui que meu Service vai direcionar o tráfego para qualquer Pod que tenha o label 'postgres'
+  ports:
+  - port: 5432
+    targetPort: 5432
+  type: ClusterIP #Tipo de Service que expõe meu Pod para o meu cluster internamente
