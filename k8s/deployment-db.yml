@@ -15,6 +15,13 @@ spec: #define o estado desejado do meu Deployment
       containers: #definimos os containers que serão executados dentro desse Pod
       - name: postgres-db
         image: postgres:17
+        env:
+        - name: POSTGRES_DB
+          value: ${{secrets.DB_NAME}}
+        - name: POSTGRES_USER
+          value: ${{secrets.DB_USER}}
+        - name: POSTGRES_PASSWORD
+          value: ${{secrets.DB_PASSWORD}}
         ports: #Dizemos as portas para acessar tal container
         - containerPort: 5432 
 ---
