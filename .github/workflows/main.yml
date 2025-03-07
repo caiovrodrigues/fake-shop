@@ -14,11 +14,10 @@ jobs:
         with:
           username: ${{secrets.DOCKER_HUB_USERNAME}}
           password: ${{secrets.DOCKER_HUB_PWD}}
-      - run: ls
       - name: Build e push da imagem docker
         uses: docker/build-push-action@v6.15.0
         with:
-          context: ../src
+          context: /src
           push: true
           tags:
             caiovrodrigues/fake-shop:latest
