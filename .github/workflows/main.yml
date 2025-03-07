@@ -6,28 +6,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  # ci:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout do repositório
-  #       uses: actions/checkout@v4.2.2
-  #     - name: Print current path
-  #       run: ls src
-  #     - name: Docker hub login
-  #       uses: docker/login-action@v3.3.0
-  #       with:
-  #         username: ${{secrets.DOCKER_HUB_USERNAME}}
-  #         password: ${{secrets.DOCKER_HUB_PWD}}
-  #     - name: Build e push da imagem docker
-  #       uses: docker/build-push-action@v6.15.0
-  #       with:
-  #         context: src
-  #         push: true
-  #         tags:
-  #           caiovrodrigues/fake-shop:latest
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4.2.2
+      - name: Print current path
+        run: ls src
+      - name: Docker hub login
+        uses: docker/login-action@v3.3.0
+        with:
+          username: ${{secrets.DOCKER_HUB_USERNAME}}
+          password: ${{secrets.DOCKER_HUB_PWD}}
+      - name: Build e push da imagem docker
+        uses: docker/build-push-action@v6.15.0
+        with:
+          context: src
+          push: true
+          tags:
+            caiovrodrigues/fake-shop:latest
   cd:
     runs-on: ubuntu-latest
-    # needs: [ci]
+    needs: [ci]
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Autentica na aws
@@ -47,6 +47,6 @@ jobs:
       - name: Deploy dos manifestos no cluster
         run: |
           kubectl apply -f k8s/deployment-db.yml
-          kubectl aplpy -f k8s/deployment-app.yml
+          kubectl apply -f k8s/deployment-app.yml
       - name: Lista todos os recursos do cluster depois do deploy
         run: kubectl get all
