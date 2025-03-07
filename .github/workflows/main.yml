@@ -17,6 +17,7 @@ jobs:
       - name: Build e push da imagem docker
         uses: docker/build-push-action@v6.15.0
         with:
+          context: ./src
           push: true
           tags:
             caiovrodrigues/fake-shop:latest
