@@ -46,5 +46,5 @@ jobs:
         run: |
           kubectl apply -f k8s/deployment-db.yml
           kubectl aplpy -f k8s/deployment-app.yml
-      - name: Lista todos os recursos do cluster antes do deploy
+      - name: Lista todos os recursos do cluster depois do deploy
         run: kubectl get all
