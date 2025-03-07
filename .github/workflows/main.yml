@@ -39,7 +39,7 @@ jobs:
           aws configure set default.region us-east-1
       - run: aws s3 ls
       - name: Conectamos no cluster
-        run: echo "Etapa de conexão com o cluster - aws eks update-kubeconfig --name clusterName"
+        run: aws eks update-kubeconfig --name eks-cluster
       - name: Deploy dos manifestos no cluster
         run: echo "Etapa de deploy dos manifestos no cluster"
       - run: echo "Fim do jbo de Entrega contínua"
