@@ -6,34 +6,32 @@ on:
   workflow_dispatch:
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@v4.2.2
-      - name: Print current path
-        run: ls src
-      - name: Docker hub login
-        uses: docker/login-action@v3.3.0
-        with:
-          username: ${{secrets.DOCKER_HUB_USERNAME}}
-          password: ${{secrets.DOCKER_HUB_PWD}}
-      - name: Build e push da imagem docker
-        uses: docker/build-push-action@v6.15.0
-        with:
-          context: src
-          push: true
-          tags:
-            caiovrodrigues/fake-shop:latest
+  # ci:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout do repositório
+  #       uses: actions/checkout@v4.2.2
+  #     - name: Print current path
+  #       run: ls src
+  #     - name: Docker hub login
+  #       uses: docker/login-action@v3.3.0
+  #       with:
+  #         username: ${{secrets.DOCKER_HUB_USERNAME}}
+  #         password: ${{secrets.DOCKER_HUB_PWD}}
+  #     - name: Build e push da imagem docker
+  #       uses: docker/build-push-action@v6.15.0
+  #       with:
+  #         context: src
+  #         push: true
+  #         tags:
+  #           caiovrodrigues/fake-shop:latest
   cd:
     runs-on: ubuntu-latest
-    needs: [ci]
+    # needs: [ci]
     steps:
       - name: Autentica na aws
-        run: |
-          aws configure
-          access-key
-          secret-access-key
+        run: aws configure
+      - run: acces-keey
       - name: Conectamos no cluster
         run: echo "Etapa de conexão com o cluster - aws eks update-kubeconfig --name clusterName"
       - name: Deploy dos manifestos no cluster
