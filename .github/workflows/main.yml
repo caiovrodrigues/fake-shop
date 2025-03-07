@@ -1,0 +1,31 @@
+name: CI-CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Autentica no docker hub
+        run: echo "Etapa de autenticação no docker hub"
+      - name: Build da imagem docker
+        run: echo "Etapa de build da aplicação"
+      - name: Push da imagem para o docker hub
+        run: echo "Etapa de push da imagem para o docker hub"
+      - run: echo "Fim do job de Integração contínua"
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Autentica na aws
+        run: echo "Etapa de autenticação na aws - aws configure"
+      - name: Conectamos no cluster
+        run: echo "Etapa de conexão com o cluster - aws eks update-kubeconfig --name clusterName"
+      - name: Deploy dos manifestos no cluster
+        run: echo "Etapa de deploy dos manifestos no cluster"
+      - run: echo "Fim do jbo de Entrega contínua"
+      
+      
+      
