@@ -30,8 +30,14 @@ jobs:
     # needs: [ci]
     steps:
       - name: Autentica na aws
-        run: aws configure
-      - run: acces-keey
+        env:
+          AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}}
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set default.region us-east-1
+      - run: aws s3 ls
       - name: Conectamos no cluster
         run: echo "Etapa de conexão com o cluster - aws eks update-kubeconfig --name clusterName"
       - name: Deploy dos manifestos no cluster
