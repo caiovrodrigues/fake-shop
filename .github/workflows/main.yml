@@ -30,7 +30,7 @@ jobs:
     needs: [ci]
     steps:
       - name: Autentica na aws
-        run: echo "Etapa de autenticação na aws - aws configure"
+        run: aws version
       - name: Conectamos no cluster
         run: echo "Etapa de conexão com o cluster - aws eks update-kubeconfig --name clusterName"
       - name: Deploy dos manifestos no cluster
