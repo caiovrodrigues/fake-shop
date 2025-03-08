@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: fakeshop-app
-        image: caiovrodrigues/fake-shop:latest
+        image: caiovrodrigues/fake-shop
         env:
         - name: DB_HOST
           value: service-db

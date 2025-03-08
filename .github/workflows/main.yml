@@ -23,11 +23,16 @@ jobs:
         with:
           context: src
           push: true
-          tags:
+          tags: |
             caiovrodrigues/fake-shop:latest
+            caiovrodrigues/fake-shop:v${{github.run_number}}
   cd:
     runs-on: ubuntu-latest
     needs: [ci]
+    permissions:
+        id-token: write
+        contents: read
+        actions: read
     steps:
       - uses: actions/checkout@v4.2.2
       - name: Autentica na aws
@@ -44,9 +49,16 @@ jobs:
         run: aws eks update-kubeconfig --name eks-cluster
       - name: Lista todos os recursos do cluster antes do deploy
         run: kubectl get all
-      - name: Deploy dos manifestos no cluster
-        run: |
-          kubectl apply -f k8s/deployment-db.yml
-          kubectl apply -f k8s/deplyoment-app.yml
+      - uses: Azure/k8s-deploy@v5
+        with:
+          manifests: |
+              ./k8s/deployment-db.yml
+              ./k8s/deplyoment-app.yml
+          images: |
+              caiovrodrigues/fake-shop:v${{github.run_number}}
+      # - name: Deploy dos manifestos no cluster
+      #   run: |
+      #     kubectl apply -f k8s/deployment-db.yml
+      #     kubectl apply -f k8s/deplyoment-app.yml
       - name: Lista todos os recursos do cluster depois do deploy
         run: kubectl get all
