@@ -19,7 +19,7 @@ spec: #define o estado desejado do meu Deployment
         - name: POSTGRES_DB
           value: ${{secrets.DB_NAME}}
         - name: POSTGRES_USER
-          value: ${{secrets.DB_USER}}
+          value: caiovrodrigues
         - name: POSTGRES_PASSWORD
           value: ${{secrets.DB_PASSWORD}}
         ports: #Dizemos as portas para acessar tal container
