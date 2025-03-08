@@ -77,7 +77,7 @@ def upgrade():
             name="Webcam Ultra HD 4K MX Brio",
             price=1299.00,
             description="A Logitech MX Brio é uma webcam de alta performance, ideal para streamers que buscam qualidade excepcional em vídeo. Com resolução 4K Ultra HD e tecnologia HDR, oferece imagens nítidas e cores vibrantes. Possui autofoco avançado e campo de visão ajustável, além de microfones estéreo embutidos, proporcionando áudio claro e sem ruídos. A MX Brio ainda conta com suporte para Windows Hello e Logitech Capture, facilitando o ajuste de configurações para streaming.",
-            short_description="Imagem Ultra HD 4K com HDR e foco automático",
+            short_description="Estou apaixonado pelo kubernetes e pipelines ci/cd",
             image="product-1.jpg"
         ),
         Product(
