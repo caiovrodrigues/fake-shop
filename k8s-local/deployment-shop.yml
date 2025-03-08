@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-eks-shop
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: eks-shop
+  template:
+    metadata:
+      labels:
+        app: eks-shop
+    spec:
+      containers:
+      - name: shop
+        image: caiovrodrigues/fake-shop:v2
+        env:
+        - name: DB_HOST
+          value: service-shop-psql #Aqui eu coloco o nome do Service que expõe o Pod do postgre, daí o k8s vai prover esse endpoint pra mim
+        - name: DB_USER
+          value: fakeshop
+        - name: DB_PASSWORD
+          value: Pg1234
+        - name: DB_NAME
+          value: fakeshop
+        - name: FLASK_APP
+          value: index.py
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-shop-external
+spec:
+  selector:
+    app: eks-shop
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer

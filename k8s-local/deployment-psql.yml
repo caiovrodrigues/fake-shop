@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-eks-postgresql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eks-postgresql
+  template:
+    metadata:
+      labels:
+        app: eks-postgresql
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:13.16
+        env:
+        - name: POSTGRES_DB
+          value: fakeshop
+        - name: POSTGRES_USER
+          value: fakeshop
+        - name: POSTGRES_PASSWORD
+          value: Pg1234
+        ports:
+        - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-shop-psql
+spec:
+  selector:
+    app: eks-postgresql
+  ports:
+  - port: 5432
+    targetPort: 5432
