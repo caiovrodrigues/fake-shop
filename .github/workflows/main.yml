@@ -56,9 +56,8 @@ jobs:
               ./k8s/deplyoment-app.yml
           images: |
               caiovrodrigues/fake-shop:v${{github.run_number}}
-      # - name: Deploy dos manifestos no cluster
-      #   run: |
-      #     kubectl apply -f k8s/deployment-db.yml
-      #     kubectl apply -f k8s/deplyoment-app.yml
+      - name: Deploy do prometheus e grafana
+        run: |
+          kubectl apply -f prometheus/deployment.yml
       - name: Lista todos os recursos do cluster depois do deploy
         run: kubectl get all
