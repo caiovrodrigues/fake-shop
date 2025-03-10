@@ -9,6 +9,10 @@ spec:
       app: fakeshop
   template:
     metadata:
+      annotations: #annotations são pares chave-valor que podem armazenar dados adicionais ao objeto 
+        prometheus.io/scrape: 'true'   #permite o prometheus coletar dados da aplicação
+        prometheus.io/port: '5000'     #qual porta ele vai coletar os dados
+        prometheus.io/path: '/metrics' #qual endpoint ele vai coletar os dados
       labels:
         app: fakeshop
     spec:
